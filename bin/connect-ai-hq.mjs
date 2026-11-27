@@ -12,6 +12,7 @@ import path from 'node:path';
 import readline from 'node:readline/promises';
 import { spawn } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { banner } from '../lib/banner.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const HOME_DIR = path.join(os.homedir(), '.connect-ai-hq');
@@ -234,9 +235,10 @@ async function disconnect() {
 }
 
 async function main() {
-  if (cmd === 'help' || cmd === '--help' || flag('help') === true || flag('h') === true) { console.log(HELP); return; }
-  if (cmd === 'start') return start();
-  if (cmd === 'connect') return connect();
+  // the gold banner only where a person reads the screen (never on mcp: stdout there is the protocol)
+  if (cmd === 'help' || cmd === '--help' || flag('help') === true || flag('h') === true) { console.log(banner()); console.log(HELP); return; }
+  if (cmd === 'start') { console.log(banner()); return start(); }
+  if (cmd === 'connect') { console.log(banner()); return connect(); }
   if (cmd === 'disconnect') return disconnect();
   if (cmd === 'mcp') { await import(pathToFileURL(path.join(ROOT, 'mcp', 'server.mjs')).href); return; }
   // 나머지는 AI 직원용 보고 명령 (hq) 으로 넘긴다
