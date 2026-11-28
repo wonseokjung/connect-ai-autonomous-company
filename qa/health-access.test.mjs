@@ -63,7 +63,7 @@ test('대표 컨디션 점수 평가 (최상 · 수면 부족 위임 권고 · 7
 
 test('브라우저·스마트폰·AI 직원 카탈로그 확장 및 아이폰 미러링 지시서 안전선', () => {
   const brKeys = new Set(BROWSER_CATALOG.map((b) => b.key));
-  for (const k of ['ego-lite', 'aside', 'chrome', 'dia', 'comet', 'arc', 'safari']) assert.ok(brKeys.has(k));
+  for (const k of ['eldo', 'ego-lite', 'aside', 'chrome', 'dia', 'comet', 'arc', 'safari']) assert.ok(brKeys.has(k));
 
   const aiKeys = new Set(AI_CATALOG.map((a) => a.key));
   for (const k of ['dots', 'geminicli', 'antigravity', 'manus', 'muse', 'pickle']) assert.ok(aiKeys.has(k));
@@ -72,10 +72,12 @@ test('브라우저·스마트폰·AI 직원 카탈로그 확장 및 아이폰 �
 
   const d = seedData();
   d.resources.push(
+    { id: 'br-eldo', kind: '브라우저', name: 'ELDO', preset: 'eldo', status: '사용 가능', isDefault: false },
     { id: 'br-aside', kind: '브라우저', name: 'Aside', preset: 'aside', status: '사용 가능', isDefault: true },
     { id: 'br-dia', kind: '브라우저', name: 'Dia', preset: 'dia', status: '사용 가능', isDefault: false },
     { id: 'ph-1', kind: '스마트폰', name: 'Jay iPhone', phoneMode: 'iphone-mirror', hostMachine: 'mbp', status: '사용 가능' },
   );
+  assert.equal(pickBrowser('ELDO에서 홈택스 영수증 확인해 줘', d.resources)?.id, 'br-eldo');
   assert.equal(pickBrowser('Dia에서 경쟁사 가격 확인해 줘', d.resources)?.id, 'br-dia');
   assert.equal(pickBrowser('이메일 확인해 줘', d.resources)?.id, 'br-aside');
 

@@ -3550,9 +3550,9 @@ route('POST', '/api/ui/skills/connect-ai-pack', async ({ body }) => {
       if (pinnedEmp) return pinnedEmp;
       const byRole = targetPool.find((e) => {
         const txt = `${e.role || ''} ${e.name || ''} ${e.id || ''} ${e.team || ''}`.toLowerCase();
-        if (preset.key === 'connect-ai-marketer' || preset.key === 'connect-ai-slides-web' || preset.key === 'connect-ai-translator') return /(마케팅|홍보|codex)/.test(txt);
-        if (preset.key === 'reversebusiness' || preset.key === 'connect-ai-xr') return /(리서치|분석|antigravity|agy)/.test(txt);
-        if (preset.key === 'connect-ai-three') return /(opencode|터미널)/.test(txt);
+        if (preset.key === 'connect-ai-marketer' || preset.key === 'connect-ai-slides-web' || preset.key === 'connect-ai-localizer') return /(마케팅|홍보|codex)/.test(txt);
+        if (preset.key === 'reversebusiness' || preset.key === 'connect-ai-xr' || preset.key === 'connect-ai-accountant') return /(리서치|분석|antigravity|agy)/.test(txt);
+        if (preset.key === 'connect-ai-three' || preset.key === 'connect-ai-developer') return /(opencode|터미널)/.test(txt);
         return /(claude|글쓰기|영상|디자인|모션)/.test(txt);
       });
       return byRole || targetPool[0];
