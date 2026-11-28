@@ -3,6 +3,14 @@
 // 모든 데이터는 textContent 로만 넣는다 (AI가 쓴 글은 데이터일 뿐, 절대 실행하지 않음).
 'use strict';
 
+// 브랜드 테마 초기화 (기본: Obsidian Black × Champagne Gold, 라이트 모드 토글 지원)
+try {
+  const savedTheme = localStorage.getItem('aihq-theme') || 'obsidian';
+  document.documentElement.dataset.theme = savedTheme;
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = savedTheme === 'light' ? '#ffffff' : '#070605';
+} catch {}
+
 const C = window.Charts;
 let S = null;
 const ui = {
@@ -1868,10 +1876,25 @@ function renderNav() {
   },
   h('i', { class: `side-pulse${workingCnt ? ' moving' : ''}` }),
   h('span', { class: 'sq-mini-txt' }, quotaSummaryText));
+  const curTheme = document.documentElement.dataset.theme || 'obsidian';
+  const isObsidian = curTheme !== 'light';
   const footNodes = [
     quotaRow,
     h('div', { class: 'row side-foot-acts' },
       h('button', { type: 'button', class: 'btn sm', onclick: openSettingsModal }, '설정'),
+      h('button', {
+        type: 'button', class: `btn sm theme-btn${isObsidian ? ' on' : ''}`,
+        title: isObsidian ? '블랙 & 골드 테마 (눌러서 화이트로 전환)' : '갤러리 화이트 테마 (눌러서 블랙 & 골드로 전환)',
+        'aria-label': '브랜드 테마 전환',
+        onclick: () => {
+          const next = isObsidian ? 'light' : 'obsidian';
+          document.documentElement.dataset.theme = next;
+          try { localStorage.setItem('aihq-theme', next); } catch {}
+          const meta = document.querySelector('meta[name="theme-color"]');
+          if (meta) meta.content = next === 'light' ? '#ffffff' : '#070605';
+          renderNav();
+        },
+      }, isObsidian ? '✦ 골드' : '☀ 라이트'),
       h('button', {
         type: 'button', class: `btn sm sound-btn${soundOn ? ' on' : ''}`,
         title: soundOn ? '효과음 켜짐 (눌러서 끄기)' : '효과음 꺼짐 (눌러서 켜기)',
