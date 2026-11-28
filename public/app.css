@@ -1,37 +1,41 @@
 /* CONNECT AI HQ v2 · 매트 블랙 × 샴페인 골드(#D4A359) × 갤러리 화이트 OS + K-Heritage 16비트 픽셀 */
 :root {
-  --bg: #ffffff;
+  --bg: #faf9f6;
   --surface: #ffffff;
-  --surface-2: #f6f7f9;
-  --surface-warm: #faf9f6;
-  --surface-gold: #fdfaf2;
-  --ink: #0f1014;
-  --ink-2: #525560;
-  --ink-3: #8a8e99;
-  --line: #eaecef;
-  --line-2: #dadce2;
-  --fill: #f6f7f9;
-  --grey: #c9ccd4;
-  --gold: #d4a359;
+  --surface-2: #f3f1ec;
+  --surface-warm: #f7f4ee;
+  --surface-gold: #fdf6e5;
+  --ink: #11100e;
+  --ink-2: #3a3732;
+  --ink-3: #59544c;
+  --line: #dad5cb;
+  --line-2: #c2bbb0;
+  --fill: #f1eee7;
+  --grey: #b8b2a6;
+  --gold: #c5923d;
   --gold-hi: #e5bc78;
-  --gold-soft: rgba(212, 163, 89, 0.16);
-  --seal: #d9381e;
-  --ok: #10b981;
-  --warn: #f59e0b;
+  --gold-soft: rgba(197, 146, 61, 0.16);
+  --seal: #c93018;
+  --ok: #0c8a5e;
+  --warn: #c27803;
   --radius: 10px;
   --font: "Pretendard", "Pretendard Variable", "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
-html, body { margin: 0; background: var(--bg); color: var(--ink); }
+html, body { margin: 0; background: var(--bg); color: var(--ink); word-break: keep-all; overflow-wrap: break-word; }
 body {
   font-family: var(--font);
-  font-size: 15px;
-  line-height: 1.55;
+  font-size: 15.5px;
+  line-height: 1.58;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
   letter-spacing: -0.005em;
 }
+html[data-text-lg="1"] body { font-size: 17.5px; line-height: 1.62; }
+html[data-text-lg="1"] .nav a { font-size: 15.5px; }
+html[data-text-lg="1"] .btn { font-size: 14.5px; }
+html[data-text-lg="1"] .side-foot-acts .btn { font-size: 12px; padding: 0 7px; }
 button, input, select, textarea { font: inherit; color: inherit; letter-spacing: inherit; }
 a { color: inherit; }
 .num { font-variant-numeric: tabular-nums; }
@@ -3921,10 +3925,17 @@ html[data-theme="obsidian"] .toast {
   box-shadow: 0 14px 36px rgba(0, 0, 0, 0.65);
 }
 html[data-theme="obsidian"] .live-dock,
-html[data-theme="obsidian"] .live-worker {
-  background: #12100d;
-  border-color: rgba(212, 163, 89, 0.35);
-  color: var(--ink);
+html[data-theme="obsidian"] .live-worker,
+html[data-theme="obsidian"] .live-worker-pill {
+  background: #14110e;
+  border-color: rgba(212, 163, 89, 0.45);
+  color: #faf6ee;
+}
+html[data-theme="obsidian"] .who-chip.ai {
+  background: linear-gradient(135deg, #f4ce86, #d4a359);
+  color: #090806;
+  border-color: #f4ce86;
+  font-weight: 700;
 }
 html[data-theme="obsidian"] .skill-pill {
   background: #181410;

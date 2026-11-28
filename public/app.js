@@ -3,12 +3,13 @@
 // 모든 데이터는 textContent 로만 넣는다 (AI가 쓴 글은 데이터일 뿐, 절대 실행하지 않음).
 'use strict';
 
-// 브랜드 테마 초기화 (기본: Obsidian Black × Champagne Gold, 라이트 모드 토글 지원)
+// 브랜드 테마 & 가독성 초기화 (기본: 편안한 고대비 라이트 + 블랙·골드 포인트, 다크/큰글씨 토글 지원)
 try {
-  const savedTheme = localStorage.getItem('aihq-theme') || 'obsidian';
+  const savedTheme = localStorage.getItem('aihq-theme') || 'light';
   document.documentElement.dataset.theme = savedTheme;
+  if (localStorage.getItem('aihq-text-lg') === '1') document.documentElement.dataset.textLg = '1';
   const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.content = savedTheme === 'light' ? '#ffffff' : '#070605';
+  if (meta) meta.content = savedTheme === 'obsidian' ? '#070605' : '#FAF9F6';
 } catch {}
 
 const C = window.Charts;
@@ -1876,25 +1877,38 @@ function renderNav() {
   },
   h('i', { class: `side-pulse${workingCnt ? ' moving' : ''}` }),
   h('span', { class: 'sq-mini-txt' }, quotaSummaryText));
-  const curTheme = document.documentElement.dataset.theme || 'obsidian';
-  const isObsidian = curTheme !== 'light';
+  const curTheme = document.documentElement.dataset.theme || 'light';
+  const isObsidian = curTheme === 'obsidian';
+  const isTextLg = document.documentElement.dataset.textLg === '1';
   const footNodes = [
     quotaRow,
     h('div', { class: 'row side-foot-acts' },
       h('button', { type: 'button', class: 'btn sm', onclick: openSettingsModal }, '설정'),
       h('button', {
+        type: 'button', class: `btn sm${isTextLg ? ' on' : ''}`,
+        title: isTextLg ? '보통 글씨 크기로 돌아가기' : '글씨 크게 보기 (시니어·고대비)',
+        'aria-label': '글씨 크기 전환',
+        onclick: () => {
+          const nextLg = !isTextLg;
+          if (nextLg) document.documentElement.dataset.textLg = '1';
+          else delete document.documentElement.dataset.textLg;
+          try { localStorage.setItem('aihq-text-lg', nextLg ? '1' : '0'); } catch {}
+          renderNav();
+        },
+      }, isTextLg ? '보통' : '가+'),
+      h('button', {
         type: 'button', class: `btn sm theme-btn${isObsidian ? ' on' : ''}`,
-        title: isObsidian ? '블랙 & 골드 테마 (눌러서 화이트로 전환)' : '갤러리 화이트 테마 (눌러서 블랙 & 골드로 전환)',
+        title: isObsidian ? '밝은 화면으로 전환' : '어두운 블랙 & 골드 화면으로 전환',
         'aria-label': '브랜드 테마 전환',
         onclick: () => {
           const next = isObsidian ? 'light' : 'obsidian';
           document.documentElement.dataset.theme = next;
           try { localStorage.setItem('aihq-theme', next); } catch {}
           const meta = document.querySelector('meta[name="theme-color"]');
-          if (meta) meta.content = next === 'light' ? '#ffffff' : '#070605';
+          if (meta) meta.content = next === 'obsidian' ? '#070605' : '#FAF9F6';
           renderNav();
         },
-      }, isObsidian ? '✦ 골드' : '☀ 라이트'),
+      }, isObsidian ? '밝게' : '어둡게'),
       h('button', {
         type: 'button', class: `btn sm sound-btn${soundOn ? ' on' : ''}`,
         title: soundOn ? '효과음 켜짐 (눌러서 끄기)' : '효과음 꺼짐 (눌러서 켜기)',
@@ -1905,7 +1919,7 @@ function renderNav() {
           if (nextOn) SND()?.play('connect', { force: true });
           renderNav();
         },
-      }, soundOn ? '♪ ON' : '♪ OFF')),
+      }, soundOn ? '♪' : '♪✕')),
   ].filter(Boolean);
   document.getElementById('side-foot').replaceChildren(...footNodes);
 }
