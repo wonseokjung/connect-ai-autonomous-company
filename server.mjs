@@ -426,7 +426,7 @@ const SEC_HEADERS = {
   'X-Frame-Options': 'DENY',
   'Cross-Origin-Resource-Policy': 'same-origin',
 };
-const CSP = "default-src 'self'; img-src 'self' data:; style-src 'self'; script-src 'self'; connect-src 'self'; media-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'";
+const CSP = "default-src 'self'; img-src 'self' data:; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; media-src 'self'; frame-ancestors 'none'; base-uri 'none'; form-action 'self'";
 
 function send(res, status, body, headers = {}) {
   const raw = Buffer.isBuffer(body) || typeof body === 'string';

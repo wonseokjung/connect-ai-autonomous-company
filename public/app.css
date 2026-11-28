@@ -19,7 +19,7 @@
   --ok: #0c8a5e;
   --warn: #c27803;
   --radius: 10px;
-  --font: "Pretendard", "Pretendard Variable", "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+  --font: "Plus Jakarta Sans", "IBM Plex Sans KR", "Apple SD Gothic Neo", -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
